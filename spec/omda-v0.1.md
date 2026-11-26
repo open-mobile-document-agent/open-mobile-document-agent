@@ -209,7 +209,7 @@ Conformance is proven by running a runtime against shared synthetic fixtures thr
 - Tests per level: L1 provenance and identity; L2 schema, quote-in-region, page hash; L3 check vectors, MRZ-outranks-print, citations, status propagation; L4 SD-JWT verification, no evidence leakage, predicates, nonce binding; all levels: no-grant indistinguishability and store round trip.
 - Accuracy (field accuracy, recall) is reported as metrics, never gated.
 - v0.1 is self-certified: a signed report becomes the manifest; conforming runtimes are listed in [`registry/runtimes.json`](../registry/runtimes.json).
-- `report.signature` is a detached compact JWS (RFC 7515 Appendix F), `alg` ES256, `typ` `omda-conformance+jws`, `kid` the RFC 7638 thumbprint of the publisher's P-256 key, over the manifest in RFC 8785 canonical form with `report.signature` set to `""`. The listing names the manifest and the publisher's public key (OD-044).
+- `report.signature` is a detached compact JWS (RFC 7515 Appendix F), `alg` ES256, `typ` `omda-conformance+jws`, `kid` the RFC 7638 thumbprint (SHA-256, base64url) of the publisher's P-256 key, over the manifest in RFC 8785 canonical form with `report.signature` set to `""`. A verifier uses the protected header segment as received. The listing names the manifest and the publisher's public key (OD-044); reference verifier: [`tools/omda_tools/signing.py`](../tools/omda_tools/signing.py).
 - Known limitation: no-grant indistinguishability covers content and shape, not timing.
 
 ## Answer model

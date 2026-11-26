@@ -75,7 +75,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["runtime", "publisher", "version", "level", "tier", "manifest", "publisher_key", "kid"],
+            "required": ["runtime", "publisher", "version", "level", "tier", "manifest", "publisher_key", "kid", "run_at"],
             "properties": {
               "runtime": { "type": "string" },
               "publisher": { "type": "string" },
@@ -87,7 +87,7 @@
               "manifest": { "type": "string", "description": "Signed conformance manifest, relative to /registry (§12, OD-044)." },
               "publisher_key": { "type": "string", "description": "Publisher's P-256 public key (JWK), relative to /registry." },
               "kid": { "type": "string", "description": "RFC 7638 thumbprint of the publisher key; the JWS header's kid." },
-              "run_at": { "type": "string" }
+              "run_at": { "$ref": "common.schema.json#/$defs/timestamp" }
             }
           }
         }
