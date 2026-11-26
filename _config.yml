@@ -1,0 +1,4 @@
+title: OMDA — Open Mobile Document Agent
+description: An open specification for turning documents into verified, cited records on the phone.
+theme: jekyll-theme-minimal
+exclude: [tools, examples/*.invalid.json]
