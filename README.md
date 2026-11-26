@@ -1,5 +1,7 @@
 # OMDA — Open Mobile Document Agent
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24553127.svg)](https://doi.org/10.5281/zenodo.24553127) · [openmobiledocumentagent.org](https://openmobiledocumentagent.org)
+
 **An open specification for turning documents into verified, cited records on the phone — readable by any model and any agent.**
 
 Phones are gaining on-device models that can read documents. What they lack is a shared answer to *what a document proves*: which value came from where on the page, which deterministic check confirmed it, what the owner approved, and what can safely be shown to an app, an assistant or an institution. OMDA standardizes that layer.
