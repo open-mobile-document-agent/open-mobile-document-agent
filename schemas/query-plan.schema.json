@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmobiledocumentagent.org/schemas/v0.1/query-plan.schema.json",
+  "title": "OMDA query plan (§9 omda.query)",
+  "type": "object",
+  "required": ["select"],
+  "additionalProperties": false,
+  "properties": {
+    "select": { "type": "array", "minItems": 1, "items": { "$ref": "common.schema.json#/$defs/fieldName" } },
+    "where": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "doc_type": { "type": "string" },
+        "entity_status": {
+          "type": "array",
+          "items": { "enum": ["active", "expired", "superseded", "archived"] },
+          "default": ["active", "expired"]
+        },
+        "min_status": { "$ref": "common.schema.json#/$defs/assertionStatus" },
+        "subject": { "type": "string" },
+        "entity": { "$ref": "common.schema.json#/$defs/entityId" }
+      }
+    },
+    "order_by": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["field"],
+        "properties": {
+          "field": { "$ref": "common.schema.json#/$defs/fieldName" },
+          "direction": { "enum": ["asc", "desc"], "default": "asc" }
+        }
+      }
+    },
+    "limit": { "type": "integer", "minimum": 1, "maximum": 500, "default": 50 },
+    "include": {
+      "type": "array",
+      "items": { "enum": ["citations", "status", "checks", "nonconformance"] }
+    }
+  }
+}

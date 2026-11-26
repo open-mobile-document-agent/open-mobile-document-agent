@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmobiledocumentagent.org/schemas/v0.1/answer.schema.json",
+  "title": "OMDA answer (Answer model)",
+  "type": "object",
+  "required": ["kind", "value", "citations", "status", "nonconformance"],
+  "additionalProperties": false,
+  "properties": {
+    "kind": { "enum": ["extracted", "derived", "generated"] },
+    "value": {},
+    "citations": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "$ref": "common.schema.json#/$defs/assertionId" },
+          {
+            "type": "object",
+            "required": ["super_id", "page", "region"],
+            "properties": {
+              "super_id": { "$ref": "common.schema.json#/$defs/superId" },
+              "page": { "type": "integer", "minimum": 1 },
+              "region": { "$ref": "common.schema.json#/$defs/region" }
+            }
+          }
+        ]
+      }
+    },
+    "status": {
+      "description": "Weakest status among citations; ungrounded when nothing is cited.",
+      "anyOf": [{ "$ref": "common.schema.json#/$defs/assertionStatus" }, { "const": "ungrounded" }]
+    },
+    "grant_scope": { "type": "array", "items": { "type": "string" } },
+    "withheld": { "type": "array", "items": { "type": "string" }, "description": "Fields withheld:no_grant (§9)." },
+    "nonconformance": { "$ref": "common.schema.json#/$defs/nonconformance" }
+  },
+  "allOf": [
+    {
+      "description": "Uncited answers must be labelled ungrounded with no_citation (OD-003).",
+      "if": { "properties": { "citations": { "maxItems": 0 } } },
+      "then": {
+        "properties": {
+          "status": { "const": "ungrounded" },
+          "nonconformance": { "contains": { "const": "no_citation" } }
+        }
+      }
+    },
+    {
+      "description": "Extracted and derived answers always cite.",
+      "if": { "properties": { "kind": { "enum": ["extracted", "derived"] } } },
+      "then": { "properties": { "citations": { "minItems": 1 } } }
+    }
+  ]
+}

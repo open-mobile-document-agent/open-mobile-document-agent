@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmobiledocumentagent.org/schemas/v0.1/common.schema.json",
+  "title": "OMDA common definitions",
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "assertionId": { "type": "string", "pattern": "^as_[0-9A-Za-z]{10,40}$" },
+    "superId": { "type": "string", "pattern": "^sd_[0-9A-Za-z]{10,40}$" },
+    "segmentId": { "type": "string", "pattern": "^sg_[0-9A-Za-z]{10,40}$" },
+    "entityId": { "type": "string", "pattern": "^de_[0-9A-Za-z]{10,40}$" },
+    "relationshipId": { "type": "string", "pattern": "^rl_[0-9A-Za-z]{10,40}$" },
+    "groupId": { "type": "string", "pattern": "^gr_[0-9A-Za-z]{10,40}$" },
+    "fieldName": {
+      "description": "domain.object.attribute, from a domain profile (§7).",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*){2,}$"
+    },
+    "region": {
+      "description": "Normalized 0–1 coordinates, origin top-left (§5, OD-006).",
+      "type": "object",
+      "required": ["x", "y", "w", "h"],
+      "additionalProperties": false,
+      "properties": {
+        "x": { "type": "number", "minimum": 0, "maximum": 1 },
+        "y": { "type": "number", "minimum": 0, "maximum": 1 },
+        "w": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+        "h": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 }
+      }
+    },
+    "assertionStatus": {
+      "description": "Strongest first. An answer inherits the weakest status it cites (§5, OD-031).",
+      "enum": ["issuer_signed", "confirmed", "verified", "unverified", "candidate", "illegible", "rejected", "suppressed"]
+    },
+    "nonconformance": {
+      "description": "Disclose, don't prohibit (§1, OD-004). Reason codes; vendor codes use x-<vendor>.<code>.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(no_citation|unverified_region|model_not_allowlisted|checksum_unavailable|off_device_processing|network_used|fuzzy_match|check_failed:[a-z0-9_.-]+|x-[a-z0-9-]+\\.[a-z0-9_.-]+)$"
+      },
+      "uniqueItems": true
+    },
+    "methodKind": { "enum": ["model", "check", "derived", "human"] },
+    "location": { "enum": ["device", "remote"] },
+    "sensitivity": { "enum": ["basic", "personal", "identifier", "special"] },
+    "checkResult": {
+      "type": "object",
+      "required": ["id", "version", "kind", "result"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^([a-z0-9]+(\\.[a-z0-9_]+)*|x-[a-z0-9-]+\\.[a-z0-9_.]+)$" },
+        "version": { "type": "string" },
+        "kind": { "enum": ["checksum", "structure", "cross_field", "consistency", "format"] },
+        "inputs": { "type": "array", "items": { "$ref": "#/$defs/assertionId" } },
+        "result": { "enum": ["pass", "fail", "not_applicable", "error"] }
+      }
+    }
+  }
+}

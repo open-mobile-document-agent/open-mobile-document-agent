@@ -1,0 +1,32 @@
+{
+  "super_id": "sd_01JDXK7Q8M2N4P6R8T0V",
+  "channel": "camera",
+  "captured_at": "2026-11-26T10:05:00Z",
+  "status": "processed",
+  "runtime": {
+    "id": "example-runtime",
+    "version": "0.9.0",
+    "tier": "T2"
+  },
+  "source": {
+    "app": null,
+    "mime": "image/jpeg",
+    "original_hash": "sha256:14e0ffdc8215c81da0cde40f581237ee35177ddac4f1fc7613cad3004798d25f",
+    "original_retained": true,
+    "location_stripped": true
+  },
+  "pages": [
+    {
+      "index": 1,
+      "page_hash": "sha256:4a715ec13f624275bd974bbfde37a3da6cf0e49d28ce3615412ad66d2d673846",
+      "width": 2480,
+      "height": 3508,
+      "text_source": "ocr",
+      "transforms": [
+        "perspective_correct",
+        "deskew",
+        "crop"
+      ]
+    }
+  ]
+}

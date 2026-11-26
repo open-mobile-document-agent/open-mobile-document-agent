@@ -1,0 +1,12 @@
+{
+  "registry": "models",
+  "version": "0.1.0",
+  "note": "Models are listed, not approved. Metrics are filled from submitted conformance-suite runs (§12). Unlisted models are allowed with the label model_not_allowlisted (OD-040).",
+  "models": [
+    { "model": "pp-ocrv5-mobile", "slots": ["ocr"], "license": "Apache-2.0", "metrics": {} },
+    { "model": "granite-docling-258m", "slots": ["layout"], "license": "Apache-2.0", "metrics": {} },
+    { "model": "qwen3-0.6b", "slots": ["extraction", "classifier", "interpreter"], "quant": "q8_0", "license": "Apache-2.0", "metrics": {} },
+    { "model": "qwen3-1.7b", "slots": ["extraction", "classifier", "interpreter", "answer_generator"], "quant": "q8_0", "license": "Apache-2.0", "metrics": {} },
+    { "model": "qwen3-embedding-0.6b", "slots": ["embedding"], "license": "Apache-2.0", "metrics": {} }
+  ]
+}

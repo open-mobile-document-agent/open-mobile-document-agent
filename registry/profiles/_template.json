@@ -1,0 +1,20 @@
+{
+  "id": "x-example.domain",
+  "version": 1,
+  "domain": "example",
+  "description": "Template for a new domain profile. Copy, rename, and validate with: omda-validate profile <file>.",
+  "doc_types": {
+    "example_document": {
+      "fields": {
+        "reference_number": { "type": "string", "sensitivity": "identifier", "checks": [] },
+        "name_as_printed": { "type": "name", "sensitivity": "basic" },
+        "issue_date": { "type": "date", "sensitivity": "basic", "checks": ["consistency.issue_before_expiry"] },
+        "expiry_date": { "type": "date", "sensitivity": "basic", "checks": ["consistency.issue_before_expiry"] }
+      },
+      "entity_key": ["reference_number"],
+      "validity": { "from": "issue_date", "until": "expiry_date" },
+      "groups": []
+    }
+  },
+  "mappings": {}
+}

@@ -1,0 +1,16 @@
+{
+  "select": [
+    "identity.passport.expiry_date"
+  ],
+  "where": {
+    "doc_type": "passport",
+    "entity_status": [
+      "active"
+    ]
+  },
+  "limit": 5,
+  "include": [
+    "citations",
+    "status"
+  ]
+}

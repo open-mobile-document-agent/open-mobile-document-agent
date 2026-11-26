@@ -1,0 +1,96 @@
+{
+  "registry": "checks",
+  "version": "0.1.0",
+  "checks": [
+    {
+      "id": "luhn",
+      "version": "1",
+      "kind": "checksum",
+      "lifts_to_verified": true,
+      "algorithm": "Luhn mod 10 over all digits; separators ignored.",
+      "reference": "ISO/IEC 7812-1 Annex B",
+      "test_vectors": [
+        { "input": "79927398713", "result": "pass" },
+        { "input": "79927398710", "result": "fail" },
+        { "input": "784199000000010", "result": "pass" }
+      ]
+    },
+    {
+      "id": "verhoeff",
+      "version": "1",
+      "kind": "checksum",
+      "lifts_to_verified": true,
+      "algorithm": "Verhoeff dihedral-group D5 check digit.",
+      "reference": "Verhoeff, J. (1969), Error Detecting Decimal Codes",
+      "test_vectors": [
+        { "input": "2363", "result": "pass" },
+        { "input": "2364", "result": "fail" },
+        { "input": "999900000016", "result": "pass" }
+      ]
+    },
+    {
+      "id": "iso7064.mod97",
+      "version": "1",
+      "kind": "checksum",
+      "lifts_to_verified": true,
+      "algorithm": "Move first four characters to the end, map letters A=10..Z=35, integer mod 97 must equal 1.",
+      "reference": "ISO 7064 / ISO 13616 (IBAN)",
+      "test_vectors": [
+        { "input": "GB82WEST12345698765432", "result": "pass" },
+        { "input": "GB82WEST12345698765433", "result": "fail" }
+      ]
+    },
+    {
+      "id": "icao9303.mrz",
+      "version": "1",
+      "kind": "structure",
+      "lifts_to_verified": true,
+      "algorithm": "TD3: weights 7-3-1 over character values (0-9, A=10..Z=35, <=0) mod 10 for number, date of birth, expiry, optional data and composite.",
+      "reference": "ICAO Doc 9303 Part 3 §4.9, Part 4",
+      "test_vectors": [
+        {
+          "input": ["P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<", "L898902C36UTO7408122F1204159ZE184226B<<<<<10"],
+          "result": "pass"
+        },
+        {
+          "input": ["P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<", "L898902C46UTO7408122F1204159ZE184226B<<<<<10"],
+          "result": "fail"
+        }
+      ]
+    },
+    {
+      "id": "cross.mrz_number",
+      "version": "1",
+      "kind": "cross_field",
+      "lifts_to_verified": true,
+      "algorithm": "Alphanumeric-normalized equality of the MRZ document number and the printed number. MRZ outranks print when the MRZ passes icao9303.mrz.",
+      "test_vectors": [
+        { "input": { "mrz": "L898902C3", "printed": "L898902C3" }, "result": "pass" },
+        { "input": { "mrz": "L898902C3", "printed": "L898902C8" }, "result": "fail" }
+      ]
+    },
+    {
+      "id": "consistency.issue_before_expiry",
+      "version": "1",
+      "kind": "consistency",
+      "lifts_to_verified": false,
+      "algorithm": "Issue date strictly earlier than expiry date.",
+      "test_vectors": [
+        { "input": { "issue": "2020-01-10", "expiry": "2030-01-09" }, "result": "pass" },
+        { "input": { "issue": "2030-01-10", "expiry": "2020-01-09" }, "result": "fail" }
+      ]
+    },
+    {
+      "id": "format.iso3166_alpha3",
+      "version": "1",
+      "kind": "format",
+      "lifts_to_verified": false,
+      "algorithm": "Three uppercase letters present in the ISO 3166-1 alpha-3 list (ICAO specimen state UTO accepted for fixtures).",
+      "reference": "ISO 3166-1",
+      "test_vectors": [
+        { "input": "ARE", "result": "pass" },
+        { "input": "A1E", "result": "fail" }
+      ]
+    }
+  ]
+}

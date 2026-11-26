@@ -1,0 +1,21 @@
+{
+  "id": "x-acme.passport-expiry",
+  "version": "1.0.0",
+  "publisher": "Acme",
+  "signature": "...",
+  "reads": [
+    "identity.passport.expiry_date",
+    "identity.passport.issuing_country"
+  ],
+  "triggers": [
+    "on_ingest",
+    "schedule:daily"
+  ],
+  "outputs": [
+    "submit_form"
+  ],
+  "models": [
+    "answer_generator"
+  ],
+  "network": []
+}

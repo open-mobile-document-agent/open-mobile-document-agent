@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmobiledocumentagent.org/schemas/v0.1/assertion.schema.json",
+  "title": "OMDA assertion (§5)",
+  "description": "One fact read from one document, carrying its own evidence. Append-only: corrections are new assertions linked by supersedes.",
+  "type": "object",
+  "required": ["id", "doc", "field", "type", "method", "status", "created_at", "nonconformance"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "$ref": "common.schema.json#/$defs/assertionId" },
+    "doc": {
+      "type": "object",
+      "required": ["super_id", "segment_id"],
+      "additionalProperties": false,
+      "properties": {
+        "super_id": { "$ref": "common.schema.json#/$defs/superId" },
+        "segment_id": { "$ref": "common.schema.json#/$defs/segmentId" }
+      }
+    },
+    "field": { "$ref": "common.schema.json#/$defs/fieldName" },
+    "value": { "description": "Absent for image assertions and for illegible values." },
+    "type": { "enum": ["string", "date", "country", "sex", "name", "amount", "code", "image"] },
+    "group": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["id", "kind", "index"],
+          "additionalProperties": false,
+          "properties": {
+            "id": { "$ref": "common.schema.json#/$defs/groupId" },
+            "kind": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+            "index": { "type": "integer", "minimum": 0 }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["quote", "page", "region", "page_hash"],
+      "additionalProperties": false,
+      "properties": {
+        "quote": { "type": "string" },
+        "page": { "type": "integer", "minimum": 1 },
+        "region": { "$ref": "common.schema.json#/$defs/region" },
+        "page_hash": { "$ref": "common.schema.json#/$defs/sha256" }
+      }
+    },
+    "derived_from": {
+      "description": "Assertions a derived value was computed from (method.kind = derived).",
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/assertionId" },
+      "minItems": 1
+    },
+    "method": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "$ref": "common.schema.json#/$defs/methodKind" },
+        "location": { "$ref": "common.schema.json#/$defs/location", "default": "device" },
+        "slot": { "type": "string" },
+        "model": { "type": "string" },
+        "quant": { "type": "string" },
+        "version": { "type": "string" },
+        "check": { "type": "string", "description": "Check id when kind = check." },
+        "source": { "enum": ["ocr", "text_layer", "nfc_chip"], "description": "Where the text came from (§3)." }
+      }
+    },
+    "checks": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/checkResult" } },
+    "status": { "$ref": "common.schema.json#/$defs/assertionStatus" },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "fuzzy_match": {
+      "type": "object",
+      "required": ["score", "method"],
+      "properties": {
+        "score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "method": { "type": "string" }
+      }
+    },
+    "supersedes": { "oneOf": [{ "type": "null" }, { "$ref": "common.schema.json#/$defs/assertionId" }] },
+    "created_at": { "$ref": "common.schema.json#/$defs/timestamp" },
+    "nonconformance": { "$ref": "common.schema.json#/$defs/nonconformance" }
+  },
+  "allOf": [
+    {
+      "description": "Evidence required unless the owner is the source (human) or the value is derived.",
+      "if": { "properties": { "method": { "properties": { "kind": { "enum": ["model", "check"] } } } } },
+      "then": { "required": ["evidence"] }
+    },
+    {
+      "if": { "properties": { "method": { "properties": { "kind": { "const": "derived" } } } } },
+      "then": { "required": ["derived_from"] }
+    },
+    {
+      "description": "Remote processing must be disclosed (§8).",
+      "if": { "properties": { "method": { "properties": { "location": { "const": "remote" } }, "required": ["location"] } } },
+      "then": { "properties": { "nonconformance": { "contains": { "const": "off_device_processing" } } } }
+    },
+    {
+      "description": "Fuzzy gate matches are capped at candidate (§6, OD-013).",
+      "if": { "required": ["fuzzy_match"] },
+      "then": { "properties": { "status": { "enum": ["candidate", "confirmed", "rejected", "suppressed"] } } }
+    },
+    {
+      "description": "Images carry a region, never a value (§7, OD-018).",
+      "if": { "properties": { "type": { "const": "image" } } },
+      "then": { "not": { "required": ["value"] } }
+    },
+    {
+      "description": "Illegible is the only status that may omit a non-image value.",
+      "if": {
+        "properties": { "type": { "not": { "const": "image" } }, "status": { "not": { "const": "illegible" } } }
+      },
+      "then": { "required": ["value"] }
+    }
+  ]
+}

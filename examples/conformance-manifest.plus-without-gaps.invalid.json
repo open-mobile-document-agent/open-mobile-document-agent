@@ -1,0 +1,46 @@
+{
+  "runtime": {
+    "name": "Example Runtime",
+    "version": "0.9.0",
+    "publisher": "Example Runtime",
+    "platforms": [
+      "android"
+    ]
+  },
+  "spec_version": "0.1",
+  "level": "L2+",
+  "tier": "T2",
+  "sections": {
+    "s3": "met",
+    "s4": "met",
+    "s5": "met",
+    "s6": "partial",
+    "s9": "not_met",
+    "s11": "not_met"
+  },
+  "gaps": [],
+  "slots": [
+    {
+      "slot": "extraction",
+      "model": "qwen3-1.7b",
+      "version": "2025-04",
+      "quant": "q8_0",
+      "size_mb": 1830,
+      "provider": "bundled",
+      "location": "device",
+      "license": "Apache-2.0"
+    }
+  ],
+  "metrics": {
+    "identity.passport.clean": {
+      "field_accuracy": 0.97,
+      "recall": 0.95,
+      "fixtures": 40
+    }
+  },
+  "report": {
+    "suite_version": "0.1.0",
+    "run_at": "2026-11-26T11:00:00Z",
+    "signature": "..."
+  }
+}

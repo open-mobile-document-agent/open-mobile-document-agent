@@ -1,0 +1,13 @@
+{
+  "id": "sg_01JDXK7Q8M2N4P6R8T1A",
+  "super_id": "sd_01JDXK7Q8M2N4P6R8T0V",
+  "pages": [
+    {
+      "page": 1
+    }
+  ],
+  "doc_type": "passport",
+  "profile": "omda.identity@1",
+  "method": "layout:granite-docling-258m",
+  "status": "confirmed"
+}

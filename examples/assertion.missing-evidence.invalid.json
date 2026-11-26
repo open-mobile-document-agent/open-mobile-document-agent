@@ -1,0 +1,45 @@
+{
+  "id": "as_01JDXK7Q8M2N4P6R8NUM",
+  "doc": {
+    "super_id": "sd_01JDXK7Q8M2N4P6R8T0V",
+    "segment_id": "sg_01JDXK7Q8M2N4P6R8T1A"
+  },
+  "field": "identity.passport.number",
+  "value": "L898902C3",
+  "type": "string",
+  "group": null,
+  "method": {
+    "kind": "model",
+    "slot": "extraction",
+    "model": "qwen3-1.7b",
+    "quant": "q8_0",
+    "version": "2025-04",
+    "location": "device"
+  },
+  "checks": [
+    {
+      "id": "icao9303.mrz",
+      "version": "1",
+      "kind": "structure",
+      "inputs": [
+        "as_01JDXK7Q8M2N4P6R8MRZ"
+      ],
+      "result": "pass"
+    },
+    {
+      "id": "cross.mrz_number",
+      "version": "1",
+      "kind": "cross_field",
+      "inputs": [
+        "as_01JDXK7Q8M2N4P6R8MRZ",
+        "as_01JDXK7Q8M2N4P6R8NUM"
+      ],
+      "result": "pass"
+    }
+  ],
+  "status": "verified",
+  "confidence": 0.94,
+  "supersedes": null,
+  "created_at": "2026-11-26T08:52:00Z",
+  "nonconformance": []
+}

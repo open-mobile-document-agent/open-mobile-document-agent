@@ -1,0 +1,19 @@
+{
+  "id": "as_01JDXK7Q8M2N4P6R8SUR",
+  "doc": {
+    "super_id": "sd_01JDXK7Q8M2N4P6R8T0V",
+    "segment_id": "sg_01JDXK7Q8M2N4P6R8T1A"
+  },
+  "field": "identity.passport.surname",
+  "value": "ERIKSSON",
+  "type": "name",
+  "derived_from": [
+    "as_01JDXK7Q8M2N4P6R8NAM"
+  ],
+  "method": {
+    "kind": "derived"
+  },
+  "status": "unverified",
+  "created_at": "2026-11-26T08:52:01Z",
+  "nonconformance": []
+}

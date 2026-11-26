@@ -1,0 +1,32 @@
+{
+  "id": "as_01JDXK7Q8M2N4P6R8PHO",
+  "doc": {
+    "super_id": "sd_01JDXK7Q8M2N4P6R8T0V",
+    "segment_id": "sg_01JDXK7Q8M2N4P6R8T1A"
+  },
+  "field": "identity.passport.photo",
+  "type": "image",
+  "evidence": {
+    "quote": "",
+    "page": 1,
+    "region": {
+      "x": 0.05,
+      "y": 0.2,
+      "w": 0.25,
+      "h": 0.35
+    },
+    "page_hash": "sha256:4a715ec13f624275bd974bbfde37a3da6cf0e49d28ce3615412ad66d2d673846"
+  },
+  "method": {
+    "kind": "model",
+    "slot": "layout",
+    "model": "granite-docling-258m",
+    "quant": "q8_0",
+    "version": "2025-04",
+    "location": "device"
+  },
+  "status": "unverified",
+  "created_at": "2026-11-26T08:52:02Z",
+  "nonconformance": [],
+  "value": "base64..."
+}

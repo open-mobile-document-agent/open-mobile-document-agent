@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmobiledocumentagent.org/schemas/v0.1/conformance-manifest.schema.json",
+  "title": "OMDA runtime conformance manifest (§1, §12)",
+  "description": "Reported level is the lowest fully met; every gap is listed. Silence counts as non-conformance.",
+  "type": "object",
+  "required": ["runtime", "spec_version", "level", "tier", "sections", "gaps", "slots", "metrics", "report"],
+  "additionalProperties": false,
+  "properties": {
+    "runtime": {
+      "type": "object",
+      "required": ["name", "version", "publisher"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "publisher": { "type": "string" },
+        "platforms": { "type": "array", "items": { "enum": ["android", "ios", "other"] } }
+      }
+    },
+    "spec_version": { "const": "0.1" },
+    "level": { "type": "string", "pattern": "^L[1-4]\\+?$" },
+    "tier": { "enum": ["T1", "T2", "T3"] },
+    "sections": {
+      "type": "object",
+      "description": "Each spec section: met, partial or not_met.",
+      "propertyNames": { "pattern": "^(s[0-9]{1,2}|answer_model)$" },
+      "additionalProperties": { "enum": ["met", "partial", "not_met"] }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["section", "code", "description"],
+        "properties": {
+          "section": { "type": "string" },
+          "code": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "slots": { "type": "array", "items": { "$ref": "slot-descriptor.schema.json" } },
+    "metrics": {
+      "description": "Accuracy reported, never gated (OD-035).",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["field_accuracy", "recall"],
+        "properties": {
+          "field_accuracy": { "type": "number", "minimum": 0, "maximum": 1 },
+          "recall": { "type": "number", "minimum": 0, "maximum": 1 },
+          "fixtures": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "report": {
+      "type": "object",
+      "required": ["suite_version", "run_at", "signature"],
+      "properties": {
+        "suite_version": { "type": "string" },
+        "run_at": { "$ref": "common.schema.json#/$defs/timestamp" },
+        "signature": { "type": "string" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "description": "A '+' level must list at least one gap.",
+      "if": { "properties": { "level": { "pattern": "\\+$" } } },
+      "then": { "properties": { "gaps": { "minItems": 1 } } }
+    }
+  ]
+}

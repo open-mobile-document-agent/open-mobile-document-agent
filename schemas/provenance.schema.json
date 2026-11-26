@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmobiledocumentagent.org/schemas/v0.1/provenance.schema.json",
+  "title": "OMDA super document provenance (§3, §4)",
+  "type": "object",
+  "required": ["super_id", "channel", "captured_at", "runtime", "source", "pages", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "super_id": { "$ref": "common.schema.json#/$defs/superId" },
+    "channel": {
+      "type": "string",
+      "pattern": "^(camera|scanner|share_sheet|file_import|screenshot|email_attachment|nfc_chip|note|consumer:[A-Za-z0-9._-]+)$"
+    },
+    "captured_at": { "$ref": "common.schema.json#/$defs/timestamp" },
+    "status": { "enum": ["captured", "processing", "processed", "failed"] },
+    "runtime": {
+      "type": "object",
+      "required": ["id", "version", "tier"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "version": { "type": "string" },
+        "tier": { "enum": ["T1", "T2", "T3"] }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["mime", "original_hash"],
+      "additionalProperties": false,
+      "properties": {
+        "app": { "type": ["string", "null"] },
+        "mime": { "type": "string" },
+        "original_hash": { "$ref": "common.schema.json#/$defs/sha256" },
+        "original_retained": { "type": "boolean", "default": true },
+        "location_stripped": { "type": "boolean", "default": true }
+      }
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["index", "page_hash"],
+        "additionalProperties": false,
+        "properties": {
+          "index": { "type": "integer", "minimum": 1 },
+          "page_hash": { "$ref": "common.schema.json#/$defs/sha256" },
+          "width": { "type": "integer", "minimum": 1 },
+          "height": { "type": "integer", "minimum": 1 },
+          "text_source": { "enum": ["ocr", "text_layer"] },
+          "text_layer_rejected": { "enum": ["missing", "thin", "garbled"] },
+          "transforms": {
+            "type": "array",
+            "items": { "enum": ["perspective_correct", "deskew", "crop", "rotate", "denoise", "rasterize"] }
+          }
+        }
+      }
+    }
+  }
+}

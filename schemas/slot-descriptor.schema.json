@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmobiledocumentagent.org/schemas/v0.1/slot-descriptor.schema.json",
+  "title": "OMDA slot descriptor (§2)",
+  "type": "object",
+  "required": ["slot", "model", "version", "provider", "location"],
+  "additionalProperties": false,
+  "properties": {
+    "slot": { "enum": ["ocr", "layout", "classifier", "extraction", "embedding", "interpreter", "answer_generator", "matcher"] },
+    "model": { "type": "string", "minLength": 1 },
+    "version": { "type": "string" },
+    "quant": { "type": "string" },
+    "size_mb": { "type": "number", "minimum": 0 },
+    "provider": { "enum": ["os", "bundled", "remote"] },
+    "location": { "$ref": "common.schema.json#/$defs/location" },
+    "license": { "type": "string" }
+  }
+}

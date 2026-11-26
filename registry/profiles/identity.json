@@ -1,0 +1,101 @@
+{
+  "id": "omda.identity",
+  "version": 1,
+  "domain": "identity",
+  "description": "Identity documents. Complete in v0.1 (OD-019).",
+  "doc_types": {
+    "passport": {
+      "fields": {
+        "number": { "type": "string", "sensitivity": "identifier", "checks": ["icao9303.mrz", "cross.mrz_number"] },
+        "issuing_country": { "type": "country", "sensitivity": "basic", "checks": ["format.iso3166_alpha3"] },
+        "name_as_printed": { "type": "name", "sensitivity": "basic" },
+        "surname": { "type": "name", "sensitivity": "basic", "derived_from": "name_as_printed" },
+        "given_names": { "type": "name", "sensitivity": "basic", "derived_from": "name_as_printed" },
+        "nationality": { "type": "country", "sensitivity": "personal", "checks": ["format.iso3166_alpha3"] },
+        "date_of_birth": { "type": "date", "sensitivity": "personal", "checks": ["icao9303.mrz"] },
+        "sex": { "type": "sex", "sensitivity": "personal" },
+        "issue_date": { "type": "date", "sensitivity": "basic", "checks": ["consistency.issue_before_expiry"] },
+        "expiry_date": { "type": "date", "sensitivity": "basic", "checks": ["icao9303.mrz", "consistency.issue_before_expiry"] },
+        "place_of_birth": { "type": "string", "sensitivity": "personal" },
+        "mrz": { "type": "string", "sensitivity": "identifier", "checks": ["icao9303.mrz"] },
+        "photo": { "type": "image", "sensitivity": "special", "export_default": false },
+        "signature": { "type": "image", "sensitivity": "special", "export_default": false }
+      },
+      "entity_key": ["issuing_country", "number"],
+      "validity": { "from": "issue_date", "until": "expiry_date" }
+    },
+    "national_id": {
+      "description": "Generic national ID; checks bound by jurisdiction (OD-016).",
+      "jurisdiction_bound": true,
+      "fields": {
+        "jurisdiction": { "type": "code", "sensitivity": "basic" },
+        "number": {
+          "type": "string",
+          "sensitivity": "identifier",
+          "jurisdiction_checks": { "in": ["verhoeff"], "ae": ["luhn"] }
+        },
+        "name_as_printed": { "type": "name", "sensitivity": "basic" },
+        "date_of_birth": { "type": "date", "sensitivity": "personal" },
+        "sex": { "type": "sex", "sensitivity": "personal" },
+        "nationality": { "type": "country", "sensitivity": "personal", "checks": ["format.iso3166_alpha3"] },
+        "issue_date": { "type": "date", "sensitivity": "basic", "checks": ["consistency.issue_before_expiry"] },
+        "expiry_date": { "type": "date", "sensitivity": "basic", "checks": ["consistency.issue_before_expiry"] },
+        "photo": { "type": "image", "sensitivity": "special", "export_default": false }
+      },
+      "entity_key": ["jurisdiction", "number"],
+      "validity": { "from": "issue_date", "until": "expiry_date" }
+    },
+    "residence_permit": {
+      "fields": {
+        "number": { "type": "string", "sensitivity": "identifier" },
+        "issuing_country": { "type": "country", "sensitivity": "basic", "checks": ["format.iso3166_alpha3"] },
+        "name_as_printed": { "type": "name", "sensitivity": "basic" },
+        "permit_type": { "type": "string", "sensitivity": "personal" },
+        "issue_date": { "type": "date", "sensitivity": "basic", "checks": ["consistency.issue_before_expiry"] },
+        "expiry_date": { "type": "date", "sensitivity": "basic", "checks": ["consistency.issue_before_expiry"] }
+      },
+      "entity_key": ["issuing_country", "number"],
+      "validity": { "from": "issue_date", "until": "expiry_date" }
+    },
+    "driving_licence": {
+      "fields": {
+        "number": { "type": "string", "sensitivity": "identifier" },
+        "issuing_country": { "type": "country", "sensitivity": "basic", "checks": ["format.iso3166_alpha3"] },
+        "name_as_printed": { "type": "name", "sensitivity": "basic" },
+        "date_of_birth": { "type": "date", "sensitivity": "personal" },
+        "categories": { "type": "code", "sensitivity": "basic" },
+        "issue_date": { "type": "date", "sensitivity": "basic", "checks": ["consistency.issue_before_expiry"] },
+        "expiry_date": { "type": "date", "sensitivity": "basic", "checks": ["consistency.issue_before_expiry"] }
+      },
+      "entity_key": ["issuing_country", "number"],
+      "validity": { "from": "issue_date", "until": "expiry_date" },
+      "groups": ["licence_categories"]
+    },
+    "visa": {
+      "fields": {
+        "number": { "type": "string", "sensitivity": "identifier" },
+        "issuing_country": { "type": "country", "sensitivity": "basic", "checks": ["format.iso3166_alpha3"] },
+        "visa_type": { "type": "string", "sensitivity": "personal" },
+        "valid_from": { "type": "date", "sensitivity": "basic" },
+        "valid_until": { "type": "date", "sensitivity": "basic" },
+        "passport_number": { "type": "string", "sensitivity": "identifier" }
+      },
+      "entity_key": ["issuing_country", "number"],
+      "validity": { "from": "valid_from", "until": "valid_until" }
+    },
+    "birth_certificate": {
+      "fields": {
+        "registration_number": { "type": "string", "sensitivity": "identifier" },
+        "name_as_printed": { "type": "name", "sensitivity": "basic" },
+        "date_of_birth": { "type": "date", "sensitivity": "personal" },
+        "place_of_birth": { "type": "string", "sensitivity": "personal" },
+        "issuing_authority": { "type": "string", "sensitivity": "basic" }
+      },
+      "entity_key": ["issuing_authority", "registration_number"]
+    }
+  },
+  "mappings": {
+    "passport": "ICAO Doc 9303 TD3",
+    "national_id": "ICAO Doc 9303 TD1 where machine-readable"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "slot": "extraction",
+  "model": "qwen3-1.7b",
+  "version": "2025-04",
+  "quant": "q8_0",
+  "size_mb": 1830,
+  "provider": "bundled",
+  "location": "device",
+  "license": "Apache-2.0"
+}

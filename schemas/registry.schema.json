@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openmobiledocumentagent.org/schemas/v0.1/registry.schema.json",
+  "title": "OMDA registries: checks and models (§2, §6)",
+  "$defs": {
+    "checkRegistry": {
+      "type": "object",
+      "required": ["registry", "version", "checks"],
+      "properties": {
+        "registry": { "const": "checks" },
+        "version": { "type": "string" },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "version", "kind", "algorithm", "test_vectors"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string" },
+              "version": { "type": "string" },
+              "kind": { "enum": ["checksum", "structure", "cross_field", "consistency", "format"] },
+              "lifts_to_verified": { "type": "boolean" },
+              "algorithm": { "type": "string" },
+              "reference": { "type": "string" },
+              "test_vectors": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "object",
+                  "required": ["input", "result"],
+                  "properties": { "input": {}, "result": { "enum": ["pass", "fail"] } }
+                }
+              }
+            },
+            "allOf": [
+              {
+                "if": { "properties": { "kind": { "enum": ["consistency", "format"] } } },
+                "then": { "properties": { "lifts_to_verified": { "const": false } } }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "modelRegistry": {
+      "type": "object",
+      "required": ["registry", "version", "models"],
+      "properties": {
+        "registry": { "const": "models" },
+        "version": { "type": "string" },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["model", "slots", "license", "metrics"],
+            "properties": {
+              "model": { "type": "string" },
+              "slots": { "type": "array", "items": { "type": "string" } },
+              "quant": { "type": "string" },
+              "size_mb": { "type": "number" },
+              "license": { "type": "string" },
+              "metrics": { "type": "object", "description": "Published slot-test metrics (§12); empty until a suite run is submitted." }
+            }
+          }
+        }
+      }
+    }
+  }
+}

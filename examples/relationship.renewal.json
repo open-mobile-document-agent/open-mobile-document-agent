@@ -1,0 +1,10 @@
+{
+  "id": "rl_01JDXK7Q8M2N4P6R8REL",
+  "type": "supersedes",
+  "from": "de_01JDXK7Q8M2N4P6R8T2B",
+  "to": "de_01JDXK7Q8M2N4P6R8T3C",
+  "status": "verified",
+  "evidence": [
+    "as_01JDXK7Q8M2N4P6R8NUM"
+  ]
+}

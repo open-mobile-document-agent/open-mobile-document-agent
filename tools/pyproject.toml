@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "omda-tools"
+version = "0.1.0"
+description = "Reference checks and schema validator for the Open Mobile Document Agent (OMDA) specification"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["jsonschema>=4.18", "referencing>=0.30"]
+authors = [{ name = "Mallikarjunayya Hiremath Sangamesh" }]
+keywords = ["omda", "document-ai", "on-device", "verifiable-credentials", "mcp"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+omda-validate = "omda_tools.validate:main"
+
+[tool.setuptools]
+packages = ["omda_tools"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
