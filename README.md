@@ -38,6 +38,13 @@ Phones are gaining on-device models that can read documents. What they lack is a
 ## Quick start
 
 ```bash
+pip install omda-tools               # from PyPI
+omda-validate --all-examples
+```
+
+From source:
+
+```bash
 cd tools
 pip install -e ".[test]"
 omda-validate --all-examples          # every example passes, every counter-example fails
