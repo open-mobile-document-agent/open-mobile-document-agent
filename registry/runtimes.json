@@ -16,7 +16,7 @@
       "manifest": "runtimes/kosha/0.1.0-beta.3.manifest.json",
       "publisher_key": "runtimes/kosha/publisher.jwk.json",
       "kid": "CYxCN8mAGF_uepJBcdyapndGy-aA5ZEwkgcA1ETnST4",
-      "run_at": "2026-11-26T15:04:27.233Z"
+      "run_at": "2026-11-26T16:18:51.113Z"
     }
   ]
 }

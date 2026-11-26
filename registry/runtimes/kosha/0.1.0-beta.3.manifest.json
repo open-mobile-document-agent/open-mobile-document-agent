@@ -30,7 +30,7 @@
     {
       "section": "s1",
       "code": "self_certified",
-      "description": "The manifest is a conformance report signed with Kosha’s publisher key (ES256, detached JWS over the RFC 8785 form; key in packages/omda/conformance/publisher.jwk.json). v0.1 is self-certified (OD-036): no third party has checked it."
+      "description": "The manifest is a conformance report signed with Kosha’s publisher key (ES256, detached JWS over the RFC 8785 form, OD-044), listed with the key in the OMDA runtime registry. v0.1 is self-certified (OD-036): no third party has checked it."
     },
     {
       "section": "s2",
@@ -39,8 +39,8 @@
     },
     {
       "section": "s2",
-      "code": "slot_tests_not_listed",
-      "description": "Kosha’s reading model (kosha-reader-2) reports slot-test metrics in this signed report, from Kosha’s 27-document fictional benchmark, which checks holder, dates and identifier only; it is not yet in the OMDA model registry, so its assertions carry model_not_allowlisted."
+      "code": "slot_tests_self_run",
+      "description": "Kosha’s reading model (kosha-reader-2) is listed in the OMDA model registry with metrics from Kosha’s own 27-document fictional benchmark, which scores holder, dates and identifier only; no shared suite has measured it."
     },
     {
       "section": "s3",
@@ -229,7 +229,7 @@
   },
   "report": {
     "suite_version": "kosha-self-0.1",
-    "run_at": "2026-11-26T15:04:27.233Z",
-    "signature": "eyJhbGciOiJFUzI1NiIsInR5cCI6Im9tZGEtY29uZm9ybWFuY2UrandzIiwia2lkIjoiQ1l4Q044bUFHRl91ZXBKQmNkeWFwbmRHeS1hQTVaRXdrZ2NBMUVUblNUNCJ9..nThsul7--ZKCg6_0u7dW0IAwbIsYKPWaDrJCfXfvLdPQdhoMKYKMDtoNxe8zMo16VpJCvJmoKRJdhOVx--hsQQ"
+    "run_at": "2026-11-26T16:18:51.113Z",
+    "signature": "eyJhbGciOiJFUzI1NiIsInR5cCI6Im9tZGEtY29uZm9ybWFuY2UrandzIiwia2lkIjoiQ1l4Q044bUFHRl91ZXBKQmNkeWFwbmRHeS1hQTVaRXdrZ2NBMUVUblNUNCJ9..SFrMASsLZfROe2PD706__JqqMbj2NfgliuPiz_rZh6ffKyShrjnWPIZmHXUEBL15gw7Kgs4ckpvYdMCYUbEKaQ"
   }
 }
