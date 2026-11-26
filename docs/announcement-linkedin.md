@@ -16,7 +16,12 @@ Today I'm publishing OMDA — the Open Mobile Document Agent specification, v0.1
 → Disclose, don't prohibit: every gap is labelled, never hidden
 
 Spec, JSON Schemas, registries, examples and reference tools are open under Apache-2.0:
-https://github.com/open-mobile-document-agent/open-mobile-document-agent
+→ Spec: https://openmobiledocumentagent.org
+→ Code: https://github.com/open-mobile-document-agent/open-mobile-document-agent
+→ pip install omda-tools
+→ DOI: https://doi.org/10.5281/zenodo.24553127
+
+I've also proposed a W3C Community Group (omda) to take it forward in the open.
 
 Feedback and implementers welcome.
 
