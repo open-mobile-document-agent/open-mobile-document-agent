@@ -23,7 +23,7 @@ omda-validate = "omda_tools.validate:main"
 packages = ["omda_tools"]
 
 [tool.setuptools.package-data]
-omda_tools = ["_data/schemas/*.json", "_data/registry/*.json", "_data/registry/profiles/*.json", "_data/examples/*.json"]
+omda_tools = ["_data/schemas/v0.1/*.json", "_data/registry/*.json", "_data/registry/profiles/*.json", "_data/examples/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

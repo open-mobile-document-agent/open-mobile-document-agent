@@ -26,7 +26,7 @@ Phones are gaining on-device models that can read documents. What they lack is a
 | --- | --- |
 | [`spec/omda-v0.1.md`](spec/omda-v0.1.md) | The specification (§0–§12 + Answer model) |
 | [`spec/DECISIONS.md`](spec/DECISIONS.md) | 43 numbered design decisions |
-| [`schemas/`](schemas) | JSON Schemas (draft 2020-12): assertion, provenance, identity, answer, query plan, skill manifest, conformance manifest, evidence credential, profile, registries |
+| [`schemas/v0.1/`](schemas/v0.1) | JSON Schemas (draft 2020-12): assertion, provenance, identity, answer, query plan, skill manifest, conformance manifest, evidence credential, profile, registries |
 | [`registry/checks.json`](registry/checks.json) | Core check registry with algorithms and test vectors |
 | [`registry/profiles/`](registry/profiles) | `identity` domain profile (passport, national ID, residence permit, driving licence, visa, birth certificate) + template |
 | [`registry/models.json`](registry/models.json) | Model registry (listed, not approved) |

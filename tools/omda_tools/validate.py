@@ -17,7 +17,7 @@ from referencing import Registry, Resource
 
 _PKG_DATA = Path(__file__).resolve().parent / "_data"
 ROOT = _PKG_DATA if (_PKG_DATA / "schemas").is_dir() else Path(__file__).resolve().parents[2]
-SCHEMAS = ROOT / "schemas"
+SCHEMAS = ROOT / "schemas" / "v0.1"
 BASE = "https://openmobiledocumentagent.org/schemas/v0.1/"
 
 

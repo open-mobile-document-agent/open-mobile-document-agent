@@ -33,14 +33,14 @@ A runtime reports the lowest level it fully meets and lists every gap.
 | L3 | Verified | Check registry and gate semantics (§6); generated answers cite (Answer model) |
 | L4 | Exchange | Signed selective-disclosure packages (§11) |
 
-- Each runtime **MUST** publish a conformance manifest ([schema](../schemas/conformance-manifest.schema.json)): level, sections met, gaps. Silence counts as non-conformance.
+- Each runtime **MUST** publish a conformance manifest ([schema](../schemas/v0.1/conformance-manifest.schema.json)): level, sections met, gaps. Silence counts as non-conformance.
 - Any assertion, answer or export below its claimed level **MUST** carry `nonconformance` reason codes (`no_citation`, `unverified_region`, `model_not_allowlisted`, `checksum_unavailable`, `off_device_processing`, `network_used`, `fuzzy_match`, `check_failed:<id>`).
 - A runtime claiming L3 with one L2 gap reports **L2+** and lists the gap.
 - Labels **MUST NOT** be stripped by any downstream agent or app.
 
 ## §2 Runtime and model slots
 
-A slot is a role with an input/output contract; any model meeting it may fill it — OS-provided, bundled or remote. [Schema](../schemas/slot-descriptor.schema.json).
+A slot is a role with an input/output contract; any model meeting it may fill it — OS-provided, bundled or remote. [Schema](../schemas/v0.1/slot-descriptor.schema.json).
 
 | Slot | Input → output |
 | --- | --- |
@@ -60,7 +60,7 @@ A slot is a role with an input/output contract; any model meeting it may fill it
 
 ## §3 Capture and provenance
 
-Every super document records how it entered the runtime. [Schema](../schemas/provenance.schema.json).
+Every super document records how it entered the runtime. [Schema](../schemas/v0.1/provenance.schema.json).
 
 **Channels:** `camera`, `scanner`, `share_sheet`, `file_import`, `screenshot`, `email_attachment`, `nfc_chip`, `consumer:<id>`, `note`.
 
@@ -74,7 +74,7 @@ Every super document records how it entered the runtime. [Schema](../schemas/pro
 
 ## §4 Document identity
 
-[Schema](../schemas/identity.schema.json).
+[Schema](../schemas/v0.1/identity.schema.json).
 
 | Level | ID | Answers | Status values |
 | --- | --- | --- | --- |
@@ -98,7 +98,7 @@ Every super document records how it entered the runtime. [Schema](../schemas/pro
 
 ## §5 Assertion model
 
-An assertion is one fact read from one document, carrying its own evidence. [Schema](../schemas/assertion.schema.json) · [example](../examples/assertion.passport-number.json).
+An assertion is one fact read from one document, carrying its own evidence. [Schema](../schemas/v0.1/assertion.schema.json) · [example](../examples/assertion.passport-number.json).
 
 **Status ladder** (strongest first; an answer inherits the weakest status it cites):
 
@@ -142,7 +142,7 @@ Checks are deterministic, offline and model-free; only they lift an assertion to
 
 ## §7 Domain profiles
 
-A profile is a versioned registry file. v0.1 ships [`identity`](../registry/profiles/identity.json) complete plus a [template](../registry/profiles/_template.json); health (FHIR mapping), education, travel, finance, insurance and property follow in v0.2. [Schema](../schemas/profile.schema.json).
+A profile is a versioned registry file. v0.1 ships [`identity`](../registry/profiles/identity.json) complete plus a [template](../registry/profiles/_template.json); health (FHIR mapping), education, travel, finance, insurance and property follow in v0.2. [Schema](../schemas/v0.1/profile.schema.json).
 
 - Field types: `string`, `date`, `country` (ISO 3166-1 alpha-3), `sex` (ICAO F/M/X), `name`, `amount`, `code`, `image`.
 - Sensitivity tiers: `basic` → `personal` → `identifier` → `special`; they set default visibility (§8) and export warnings (§11).
@@ -163,7 +163,7 @@ A profile is a versioned registry file. v0.1 ships [`identity`](../registry/prof
 
 ## §9 Agent interface
 
-One operation set, defined as MCP tools and bound one-to-one to Android AppFunctions (the platform's on-device MCP) and iOS App Intents. Query plan [schema](../schemas/query-plan.schema.json).
+One operation set, defined as MCP tools and bound one-to-one to Android AppFunctions (the platform's on-device MCP) and iOS App Intents. Query plan [schema](../schemas/v0.1/query-plan.schema.json).
 
 | Operation | Purpose |
 | --- | --- |
@@ -182,7 +182,7 @@ One operation set, defined as MCP tools and bound one-to-one to Android AppFunct
 
 ## §10 Skills manifest
 
-A skill runs inside the runtime and analyses the owner's store. Skills read and report; actions belong to products. [Schema](../schemas/skill-manifest.schema.json).
+A skill runs inside the runtime and analyses the owner's store. Skills read and report; actions belong to products. [Schema](../schemas/v0.1/skill-manifest.schema.json).
 
 - `reads` (fields or tiers) generate a plain-sentence permission; `triggers`: `on_ingest`, `on_query`, `on_entity_status`, `schedule:*`; `outputs`: `finding`, `reminder`, `answer`, `form_answers` (never submitted), `proposed_assertion`.
 - Sandboxed; events carry field names, never values; outputs **MUST** cite and follow the Answer model; an output is visible only to someone who can read every assertion it cites; every run is logged.
@@ -191,7 +191,7 @@ A skill runs inside the runtime and analyses the owner's store. Skills read and 
 
 ## §11 Exchange
 
-A package proves that a genuine conforming runtime read these values from a document the owner holds and that these checks passed. It does **not** prove the document is genuine unless a value is `issuer_signed`. [Schema](../schemas/evidence-credential.schema.json) · [example](../examples/evidence-credential.hotel.json).
+A package proves that a genuine conforming runtime read these values from a document the owner holds and that these checks passed. It does **not** prove the document is genuine unless a value is `issuer_signed`. [Schema](../schemas/v0.1/evidence-credential.schema.json) · [example](../examples/evidence-credential.hotel.json).
 
 - Format: a W3C Verifiable Credentials 2.0 credential of type `OMDAEvidenceCredential`, secured with SD-JWT (VC JOSE-COSE).
 - Signed with a device-bound runtime key attested by the platform (Android Key Attestation, iOS App Attest); the attestation vouches for the runtime, not the document.
@@ -219,7 +219,7 @@ Conformance is proven by running a runtime against shared synthetic fixtures thr
 | `derived` | Deterministic computation | Yes (§11 rules) |
 | `generated` | Model composition via RAG over the store | Never |
 
-- A generated answer **MUST** cite at least one assertion or text region (L3). [Schema](../schemas/answer.schema.json).
+- A generated answer **MUST** cite at least one assertion or text region (L3). [Schema](../schemas/v0.1/answer.schema.json).
 - A runtime **MAY** return an uncited answer but **MUST** label it `ungrounded` with `no_citation` on every surface.
 - An answer inherits the weakest status among its citations.
 - OMDA specifies what retrieval returns, not how runtimes index.
