@@ -45,7 +45,7 @@ pytest                                # registry test vectors, profiles, example
 
 ## Status
 
-v0.1 draft, November 2026. Feedback via issues and pull requests. Fixtures in examples use ICAO's fictional specimen state `UTO` and generated identifiers; no real personal data.
+v0.1 draft, November 2026, Apache-2.0. Feedback via issues and pull requests. Fixtures in examples use ICAO's fictional specimen state `UTO` and generated identifiers; no real personal data.
 
 ## Related
 

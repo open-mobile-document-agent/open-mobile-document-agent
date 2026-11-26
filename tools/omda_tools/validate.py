@@ -15,7 +15,8 @@ from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
 
-ROOT = Path(__file__).resolve().parents[2]
+_PKG_DATA = Path(__file__).resolve().parent / "_data"
+ROOT = _PKG_DATA if (_PKG_DATA / "schemas").is_dir() else Path(__file__).resolve().parents[2]
 SCHEMAS = ROOT / "schemas"
 BASE = "https://openmobiledocumentagent.org/schemas/v0.1/"
 

@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use OMDA, please cite it as below."
+title: "OMDA — Open Mobile Document Agent Specification"
+version: 0.1.0
+date-released: 2026-11-26
+license: Apache-2.0
+authors:
+  - family-names: Sangamesh
+    given-names: Mallikarjunayya Hiremath
+repository-code: "https://github.com/open-mobile-document-agent/open-mobile-document-agent"
+url: "https://openmobiledocumentagent.org"
+keywords:
+  - document AI
+  - on-device AI
+  - mobile
+  - verifiable credentials
+  - selective disclosure
+  - MCP
+  - specification
+abstract: >-
+  OMDA is an open specification for turning paper and digital documents into
+  verified, cited records on a phone, readable by any model and any agent. It
+  defines model slots, provenance, evidenced assertions, deterministic
+  verification, an on-device store, an agent interface bound to MCP, Android
+  AppFunctions and iOS App Intents, a skills manifest, and selective-disclosure
+  exchange over W3C Verifiable Credentials 2.0 with SD-JWT.

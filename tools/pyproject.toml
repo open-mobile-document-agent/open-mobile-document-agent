@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Reference checks and schema validator for the Open Mobile Document Agent (OMDA) specification"
 readme = "README.md"
 requires-python = ">=3.10"
+license = "Apache-2.0"
 dependencies = ["jsonschema>=4.18", "referencing>=0.30"]
 authors = [{ name = "Mallikarjunayya Hiremath Sangamesh" }]
 keywords = ["omda", "document-ai", "on-device", "verifiable-credentials", "mcp"]
@@ -20,6 +21,9 @@ omda-validate = "omda_tools.validate:main"
 
 [tool.setuptools]
 packages = ["omda_tools"]
+
+[tool.setuptools.package-data]
+omda_tools = ["_data/schemas/*.json", "_data/registry/*.json", "_data/registry/profiles/*.json", "_data/examples/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

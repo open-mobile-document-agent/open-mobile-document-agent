@@ -1,0 +1,12 @@
+{
+  "title": "OMDA — Open Mobile Document Agent Specification",
+  "upload_type": "software",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "creators": [{ "name": "Sangamesh, Mallikarjunayya Hiremath" }],
+  "description": "Open specification for turning documents into verified, cited records on the phone, readable by any model and any agent: model slots, provenance, evidenced assertions, deterministic verification, on-device store, MCP/AppFunctions/App Intents agent interface, skills manifest, and selective-disclosure exchange over W3C VC 2.0 + SD-JWT. Includes JSON Schemas, registries, examples and Python reference tools.",
+  "keywords": ["document AI", "on-device AI", "mobile", "verifiable credentials", "selective disclosure", "MCP", "specification"],
+  "related_identifiers": [
+    { "identifier": "https://github.com/open-mobile-document-agent/open-mobile-document-agent", "relation": "isSupplementTo", "scheme": "url" }
+  ]
+}
