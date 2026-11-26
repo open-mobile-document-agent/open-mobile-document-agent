@@ -208,7 +208,8 @@ Conformance is proven by running a runtime against shared synthetic fixtures thr
 - Fixtures are synthetic only (no real personal data): clean, degraded (blur, glare, skew, low resolution, occlusion) and adversarial (MRZ/print mismatch, failed check digit, quote outside region, duplicate capture, renewal pair, multi-document bundle), each with expected assertions, statuses, labels and relationships.
 - Tests per level: L1 provenance and identity; L2 schema, quote-in-region, page hash; L3 check vectors, MRZ-outranks-print, citations, status propagation; L4 SD-JWT verification, no evidence leakage, predicates, nonce binding; all levels: no-grant indistinguishability and store round trip.
 - Accuracy (field accuracy, recall) is reported as metrics, never gated.
-- v0.1 is self-certified: a signed report becomes the manifest; conforming runtimes are listed in the repo registry.
+- v0.1 is self-certified: a signed report becomes the manifest; conforming runtimes are listed in [`registry/runtimes.json`](../registry/runtimes.json).
+- `report.signature` is a detached compact JWS (RFC 7515 Appendix F), `alg` ES256, `typ` `omda-conformance+jws`, `kid` the RFC 7638 thumbprint of the publisher's P-256 key, over the manifest in RFC 8785 canonical form with `report.signature` set to `""`. The listing names the manifest and the publisher's public key (OD-044).
 - Known limitation: no-grant indistinguishability covers content and shape, not timing.
 
 ## Answer model

@@ -1,0 +1,22 @@
+{
+  "registry": "runtimes",
+  "version": "0.1.0",
+  "note": "Self-certified (OD-036): each runtime signs its own report. Listed, not approved. The manifest's report.signature is a detached ES256 JWS over the RFC 8785 form of the manifest with report.signature set to \"\" (OD-044); the key is the publisher's.",
+  "runtimes": [
+    {
+      "runtime": "Kosha",
+      "publisher": "Kosha",
+      "version": "0.1.0-beta.3",
+      "platforms": [
+        "android"
+      ],
+      "level": "L1+",
+      "tier": "T2",
+      "gaps": 22,
+      "manifest": "runtimes/kosha/0.1.0-beta.3.manifest.json",
+      "publisher_key": "runtimes/kosha/publisher.jwk.json",
+      "kid": "CYxCN8mAGF_uepJBcdyapndGy-aA5ZEwkgcA1ETnST4",
+      "run_at": "2026-11-26T15:04:27.233Z"
+    }
+  ]
+}

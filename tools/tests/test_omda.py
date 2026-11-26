@@ -39,6 +39,39 @@ def test_registry_valid():
     assert errors("registry#modelRegistry", models) == []
 
 
+def test_runtimes_listed():
+    runtimes = json.loads((ROOT / "registry" / "runtimes.json").read_text())
+    assert errors("registry#runtimeRegistry", runtimes) == []
+    for r in runtimes["runtimes"]:
+        manifest = json.loads((ROOT / "registry" / r["manifest"]).read_text())
+        jwk = json.loads((ROOT / "registry" / r["publisher_key"]).read_text())
+        assert errors("conformance-manifest", manifest) == []
+        assert (manifest["level"], manifest["tier"], manifest["runtime"]["version"]) == (r["level"], r["tier"], r["version"])
+        assert jwk.get("kid") == r["kid"]
+
+
+def test_runtime_signatures():
+    """OD-044: each listed manifest's detached ES256 JWS verifies with its publisher key."""
+    import base64, hashlib
+    ec = pytest.importorskip("cryptography.hazmat.primitives.asymmetric.ec")
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.hazmat.primitives.asymmetric.utils import encode_dss_signature
+    d = lambda s: base64.urlsafe_b64decode(s + "=" * (-len(s) % 4))
+    e = lambda b: base64.urlsafe_b64encode(b).rstrip(b"=").decode()
+    for r in json.loads((ROOT / "registry" / "runtimes.json").read_text())["runtimes"]:
+        manifest = json.loads((ROOT / "registry" / r["manifest"]).read_text())
+        jwk = json.loads((ROOT / "registry" / r["publisher_key"]).read_text())
+        header, empty, sig = manifest["report"]["signature"].split(".")
+        assert empty == "" and json.loads(d(header)) == {"alg": "ES256", "typ": "omda-conformance+jws", "kid": r["kid"]}
+        thumb = json.dumps({"crv": jwk["crv"], "kty": jwk["kty"], "x": jwk["x"], "y": jwk["y"]}, separators=(",", ":"))
+        assert e(hashlib.sha256(thumb.encode()).digest()) == r["kid"]
+        manifest["report"]["signature"] = ""
+        payload = json.dumps(manifest, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+        key = ec.EllipticCurvePublicNumbers(int.from_bytes(d(jwk["x"]), "big"), int.from_bytes(d(jwk["y"]), "big"), ec.SECP256R1()).public_key()
+        raw = d(sig)
+        key.verify(encode_dss_signature(int.from_bytes(raw[:32], "big"), int.from_bytes(raw[32:], "big")), f"{header}.{e(payload)}".encode(), ec.ECDSA(hashes.SHA256()))
+
+
 @pytest.mark.parametrize("path", sorted((ROOT / "registry" / "profiles").glob("*.json")), ids=lambda p: p.name)
 def test_profiles_valid(path):
     assert errors("profile", json.loads(path.read_text())) == []

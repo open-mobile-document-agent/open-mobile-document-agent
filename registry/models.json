@@ -1,12 +1,16 @@
 {
   "registry": "models",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "note": "Models are listed, not approved. Metrics are filled from submitted conformance-suite runs (§12). Unlisted models are allowed with the label model_not_allowlisted (OD-040).",
   "models": [
     { "model": "pp-ocrv5-mobile", "slots": ["ocr"], "license": "Apache-2.0", "metrics": {} },
     { "model": "granite-docling-258m", "slots": ["layout"], "license": "Apache-2.0", "metrics": {} },
     { "model": "qwen3-0.6b", "slots": ["extraction", "classifier", "interpreter"], "quant": "q8_0", "license": "Apache-2.0", "metrics": {} },
     { "model": "qwen3-1.7b", "slots": ["extraction", "classifier", "interpreter", "answer_generator"], "quant": "q8_0", "license": "Apache-2.0", "metrics": {} },
-    { "model": "qwen3-embedding-0.6b", "slots": ["embedding"], "license": "Apache-2.0", "metrics": {} }
+    { "model": "qwen3-embedding-0.6b", "slots": ["embedding"], "license": "Apache-2.0", "metrics": {} },
+    { "model": "kosha-reader-2", "slots": ["extraction", "classifier", "interpreter"], "quant": "iq4_nl", "size_mb": 146.6, "license": "Apache-2.0",
+      "base": "MNN-Pocket-0.3B (Apache-2.0), 24 of 28 layers, distilled from kosha-reader-1",
+      "metrics": { "kosha-bench.all": { "field_accuracy": 1, "recall": 1, "fixtures": 27 } },
+      "metrics_source": "runtimes/kosha/0.1.0-beta.3.manifest.json (signed): Kosha's own fictional benchmark, 27 documents in nine classes, scoring holder, issue date, expiry date and identifier (101 fields). Not the shared §12 suite, which does not exist yet." }
   ]
 }

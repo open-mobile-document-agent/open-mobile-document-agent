@@ -4,6 +4,7 @@ Newest first.
 
 | # | Decision |
 | --- | --- |
+| OD-044 | Conformance reports signed as a detached ES256 JWS over the RFC 8785 manifest; runtimes listed in `registry/runtimes.json` with the publisher key |
 | OD-043 | Owner-written notes are documents with `method.kind = human` |
 | OD-042 | GPS/location EXIF stripped by default |
 | OD-041 | Original capture bytes kept by default; owner may discard |
