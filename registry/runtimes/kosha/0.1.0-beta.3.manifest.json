@@ -1,0 +1,235 @@
+{
+  "runtime": {
+    "name": "Kosha",
+    "version": "0.1.0-beta.3",
+    "publisher": "Kosha",
+    "platforms": [
+      "android"
+    ]
+  },
+  "spec_version": "0.1",
+  "level": "L1+",
+  "tier": "T2",
+  "sections": {
+    "s0": "met",
+    "s1": "partial",
+    "s2": "partial",
+    "s3": "partial",
+    "s4": "partial",
+    "s5": "partial",
+    "s6": "met",
+    "s7": "partial",
+    "s8": "partial",
+    "s9": "partial",
+    "s10": "partial",
+    "s11": "partial",
+    "s12": "partial",
+    "answer_model": "met"
+  },
+  "gaps": [
+    {
+      "section": "s1",
+      "code": "self_certified",
+      "description": "The manifest is a conformance report signed with Kosha’s publisher key (ES256, detached JWS over the RFC 8785 form, OD-044), listed with the key in the OMDA runtime registry. v0.1 is self-certified (OD-036): no third party has checked it."
+    },
+    {
+      "section": "s2",
+      "code": "reduced_mode",
+      "description": "No layout, embedding, answer_generator or matcher slot: layout is rule-based, fuzzy matching is not used, and the ask returns extracted and derived answers only."
+    },
+    {
+      "section": "s2",
+      "code": "slot_tests_self_run",
+      "description": "Kosha’s reading model (kosha-reader-2) is listed in the OMDA model registry with metrics from Kosha’s own 27-document fictional benchmark, which scores holder, dates and identifier only; no shared suite has measured it."
+    },
+    {
+      "section": "s3",
+      "code": "folder_scans_not_copied",
+      "description": "Papers the owner adds (camera, file, share sheet, another app) keep their original bytes in the encrypted vault by default, and the owner may remove the copy; papers found by a folder scan stay in the owner’s own folder and are recorded as not retained."
+    },
+    {
+      "section": "s3",
+      "code": "text_layer_android15_only",
+      "description": "A valid PDF text layer is used on Android 15 (SDK extension 13) and its page recorded as text_layer; elsewhere, or when the layer is missing, thin or carries replacement characters, the page is rasterized and read by OCR with the reason recorded. Lines the platform cannot place on the page are dropped rather than given an invented box."
+    },
+    {
+      "section": "s3",
+      "code": "records_before_omda",
+      "description": "Documents filed before OMDA records were written have no provenance until read again; their door is then written as file_import."
+    },
+    {
+      "section": "s4",
+      "code": "single_segment",
+      "description": "Each capture is one segment and one document entity; the owner cannot split or merge segments."
+    },
+    {
+      "section": "s4",
+      "code": "lineage_by_key_only",
+      "description": "Lineage is found only by a profile entity key (identity papers): supersedes and duplicate_of are verified, asked on the card and confirmed by the owner, and a pass that finds nothing records no_match; amends, attached_to and related are not proposed, and papers outside a profile get lineage only from the owner’s own “replaces”."
+    },
+    {
+      "section": "s4",
+      "code": "no_archive_action",
+      "description": "A paper is superseded only by a confirmed replacement; Kosha has no separate, reversible archive action, so no entity is ever archived."
+    },
+    {
+      "section": "s5",
+      "code": "decisions_not_synced",
+      "description": "The owner’s answers are kept on this phone; they do not yet travel to the family’s other devices with the change log."
+    },
+    {
+      "section": "s5",
+      "code": "printed_field_names",
+      "description": "Fields outside the identity profile are named kosha.printed.<label>, not by a domain profile (only identity exists in v0.1)."
+    },
+    {
+      "section": "s5",
+      "code": "no_groups",
+      "description": "Multi-value fields are not linked by group."
+    },
+    {
+      "section": "s7",
+      "code": "sensitivity_unlock_unapplied",
+      "description": "Sensitivity tiers set what a consumer may see (grants by tier) and warn before an identifier or special value is shared in a proof, but they do not yet set unlock (§8) or the card’s own visibility."
+    },
+    {
+      "section": "s7",
+      "code": "no_image_assertions",
+      "description": "Photo and signature regions are not recorded as image assertions."
+    },
+    {
+      "section": "s8",
+      "code": "hardware_key_optional",
+      "description": "The vault key can be held by Android Keystore (StrongBox when present) behind fingerprint or screen lock, as an option the owner turns on; the passphrase and recovery code still wrap it too, by design, so recovery never depends on one phone (D-315, D-416)."
+    },
+    {
+      "section": "s8",
+      "code": "erase_by_overwrite",
+      "description": "Deleting a paper overwrites its rows (SQLCipher secure_delete, then a WAL checkpoint) rather than destroying a per-entity key; the family change log keeps a deleted paper’s title as merge evidence (D-261)."
+    },
+    {
+      "section": "s8",
+      "code": "unlock_per_vault",
+      "description": "Fingerprint or screen-lock unlock opens the whole vault; it is not required separately for identifier or special fields (Kosha stores no special-tier images)."
+    },
+    {
+      "section": "s9",
+      "code": "no_appfunctions_binding",
+      "description": "Other apps reach the MCP tools through Kosha’s own Android binding (a content provider taking MCP JSON-RPC, the caller’s package as consumer id), served only while the vault is open; Android AppFunctions and iOS App Intents bindings are not built, because AppFunctions callers need a privileged permission that cannot be exercised here."
+    },
+    {
+      "section": "s10",
+      "code": "skills_not_triggered",
+      "description": "The built-in expiry watch has an OMDA manifest (x-kosha.expiry-watch) whose generated permission the owner reads in Settings, but the app does not yet run skills on their declared triggers, skill outputs cite documents rather than assertions, and there is no portable sandbox (v0.2)."
+    },
+    {
+      "section": "s11",
+      "code": "attestation_challenge_per_key",
+      "description": "The runtime key’s attestation challenge is chosen when the key is made, not taken from each verifier’s nonce; the nonce binds the presentation through the key-binding JWT instead."
+    },
+    {
+      "section": "s11",
+      "code": "issuer_signatures_unread",
+      "description": "Issuer signatures (ePassport chip, mDL) are not read, so no value is issuer_signed."
+    },
+    {
+      "section": "s12",
+      "code": "self_run_only",
+      "description": "Kosha runs its own §12 suite (packages/ondevice/src/omda-conformance.test.ts; report in packages/ondevice/conformance/report.json): synthetic clean, degraded and adversarial fixtures through the MCP interface, 13 of 14 passing, the failure being the multi-document split. It tests the OMDA layer, not OCR or the reading model, whose metrics come from Kosha’s own benchmark; no shared suite exists yet."
+    }
+  ],
+  "slots": [
+    {
+      "slot": "ocr",
+      "model": "pp-ocrv5-mobile",
+      "version": "ppocrv5",
+      "provider": "bundled",
+      "location": "device",
+      "license": "Apache-2.0"
+    },
+    {
+      "slot": "extraction",
+      "model": "kosha-reader-2",
+      "version": "kosha-reader-2",
+      "size_mb": 147,
+      "provider": "bundled",
+      "location": "device",
+      "license": "Apache-2.0"
+    },
+    {
+      "slot": "classifier",
+      "model": "kosha-reader-2",
+      "version": "kosha-reader-2",
+      "size_mb": 147,
+      "provider": "bundled",
+      "location": "device",
+      "license": "Apache-2.0"
+    },
+    {
+      "slot": "interpreter",
+      "model": "kosha-reader-2",
+      "version": "kosha-reader-2",
+      "size_mb": 147,
+      "provider": "bundled",
+      "location": "device",
+      "license": "Apache-2.0"
+    }
+  ],
+  "metrics": {
+    "kosha-bench.insurance-policy": {
+      "field_accuracy": 1,
+      "recall": 1,
+      "fixtures": 3
+    },
+    "kosha-bench.lab-report": {
+      "field_accuracy": 1,
+      "recall": 1,
+      "fixtures": 3
+    },
+    "kosha-bench.national-id": {
+      "field_accuracy": 1,
+      "recall": 1,
+      "fixtures": 3
+    },
+    "kosha-bench.passport": {
+      "field_accuracy": 1,
+      "recall": 1,
+      "fixtures": 3
+    },
+    "kosha-bench.pension": {
+      "field_accuracy": 1,
+      "recall": 1,
+      "fixtures": 3
+    },
+    "kosha-bench.property": {
+      "field_accuracy": 1,
+      "recall": 1,
+      "fixtures": 3
+    },
+    "kosha-bench.school": {
+      "field_accuracy": 1,
+      "recall": 1,
+      "fixtures": 3
+    },
+    "kosha-bench.utility": {
+      "field_accuracy": 1,
+      "recall": 1,
+      "fixtures": 3
+    },
+    "kosha-bench.visa-permit": {
+      "field_accuracy": 1,
+      "recall": 1,
+      "fixtures": 3
+    },
+    "kosha-bench.all": {
+      "field_accuracy": 1,
+      "recall": 1,
+      "fixtures": 27
+    }
+  },
+  "report": {
+    "suite_version": "kosha-self-0.1",
+    "run_at": "2026-11-26T16:18:51.113Z",
+    "signature": "eyJhbGciOiJFUzI1NiIsInR5cCI6Im9tZGEtY29uZm9ybWFuY2UrandzIiwia2lkIjoiQ1l4Q044bUFHRl91ZXBKQmNkeWFwbmRHeS1hQTVaRXdrZ2NBMUVUblNUNCJ9..SFrMASsLZfROe2PD706__JqqMbj2NfgliuPiz_rZh6ffKyShrjnWPIZmHXUEBL15gw7Kgs4ckpvYdMCYUbEKaQ"
+  }
+}

@@ -32,6 +32,7 @@ Phones are gaining on-device models that can read documents. What they lack is a
 | [`registry/checks.json`](registry/checks.json) | Core check registry with algorithms and test vectors |
 | [`registry/profiles/`](registry/profiles) | `identity` domain profile (passport, national ID, residence permit, driving licence, visa, birth certificate) + template |
 | [`registry/models.json`](registry/models.json) | Model registry (listed, not approved) |
+| [`registry/runtimes.json`](registry/runtimes.json) | Runtimes with signed, self-certified conformance reports (listed, not approved) |
 | [`examples/`](examples) | Valid examples and `*.invalid.json` counter-examples |
 | [`tools/`](tools) | Python reference checks and `omda-validate` |
 

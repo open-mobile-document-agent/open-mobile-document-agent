@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from omda_tools import checks
+from omda_tools import checks, signing
 from omda_tools.validate import check_examples, errors
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -37,6 +37,38 @@ def test_registry_valid():
     assert errors("registry#checkRegistry", REG) == []
     models = json.loads((ROOT / "registry" / "models.json").read_text())
     assert errors("registry#modelRegistry", models) == []
+
+
+def test_runtimes_listed():
+    runtimes = json.loads((ROOT / "registry" / "runtimes.json").read_text())
+    assert errors("registry#runtimeRegistry", runtimes) == []
+    for r in runtimes["runtimes"]:
+        manifest = json.loads((ROOT / "registry" / r["manifest"]).read_text())
+        jwk = json.loads((ROOT / "registry" / r["publisher_key"]).read_text())
+        assert errors("conformance-manifest", manifest) == []
+        assert (manifest["level"], manifest["tier"], manifest["runtime"]["version"]) == (r["level"], r["tier"], r["version"])
+        assert jwk.get("kid") == r["kid"]
+
+
+def test_runtime_signatures():
+    """OD-044: each listed manifest's detached ES256 JWS verifies with its publisher key, and any edit breaks it."""
+    for r in json.loads((ROOT / "registry" / "runtimes.json").read_text())["runtimes"]:
+        manifest = json.loads((ROOT / "registry" / r["manifest"]).read_text())
+        jwk = json.loads((ROOT / "registry" / r["publisher_key"]).read_text())
+        assert signing.verify_report(manifest, jwk) == r["kid"]
+        tampered = json.loads(json.dumps(manifest))
+        tampered["gaps"] = tampered["gaps"][1:]
+        with pytest.raises(Exception):
+            signing.verify_report(tampered, jwk)
+
+
+@pytest.mark.parametrize("value, expected", [
+    ({"b": 1, "a": [True, None, "é"]}, '{"a":[true,null,"é"],"b":1}'),
+    (1.0, "1"), (0.818, "0.818"), (1e-7, "1e-7"), (0.000001, "0.000001"), (1e16, "10000000000000000"), (1e21, "1e+21"), (-0.5, "-0.5"),
+    ({"\U0001F600": 1, "\uFFFF": 2}, '{"\U0001F600":1,"\uFFFF":2}'),
+])
+def test_canonical_json(value, expected):
+    assert signing.canonical_json(value) == expected
 
 
 @pytest.mark.parametrize("path", sorted((ROOT / "registry" / "profiles").glob("*.json")), ids=lambda p: p.name)
