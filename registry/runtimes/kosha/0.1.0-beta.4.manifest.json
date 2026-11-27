@@ -1,7 +1,7 @@
 {
   "runtime": {
     "name": "Kosha",
-    "version": "0.1.0-beta.3",
+    "version": "0.1.0-beta.4",
     "publisher": "Kosha",
     "platforms": [
       "android"
@@ -59,8 +59,8 @@
     },
     {
       "section": "s4",
-      "code": "single_segment",
-      "description": "Each capture is one segment and one document entity; the owner cannot split or merge segments."
+      "code": "segments_by_mrz_only",
+      "description": "A capture is divided into papers by deterministic page rules: a page whose passport MRZ names another document starts a new segment with its own entity and assertions. Pages are not split by the kind of paper they name, a split inside a page is not made, splits are not asked about, and the owner cannot split or merge segments."
     },
     {
       "section": "s4",
@@ -114,8 +114,13 @@
     },
     {
       "section": "s9",
-      "code": "no_appfunctions_binding",
-      "description": "Other apps reach the MCP tools through Kosha’s own Android binding (a content provider taking MCP JSON-RPC, the caller’s package as consumer id), served only while the vault is open; Android AppFunctions and iOS App Intents bindings are not built, because AppFunctions callers need a privileged permission that cannot be exercised here."
+      "code": "no_app_intents_binding",
+      "description": "Other apps reach the MCP tools through two Android bindings, both served only while the vault is open, with the caller’s package as consumer id: a content provider taking MCP JSON-RPC, and Android AppFunctions (Android 16 and later, one function per tool, for agent apps holding EXECUTE_APP_FUNCTIONS). There is no iOS App Intents binding, because Kosha has no iOS app."
+    },
+    {
+      "section": "s9",
+      "code": "appfunctions_untested_with_agents",
+      "description": "The AppFunctions binding was tested on an Android 16 emulator with a fictional privileged caller; no real assistant (such as Gemini) has called it, and its function metadata comes from the Jetpack compiler 1.0.0-alpha07, the last release that builds with this app’s toolchain."
     },
     {
       "section": "s10",
@@ -129,13 +134,23 @@
     },
     {
       "section": "s11",
-      "code": "issuer_signatures_unread",
-      "description": "Issuer signatures (ePassport chip, mDL) are not read, so no value is issuer_signed."
+      "code": "cscas_owner_imported",
+      "description": "Kosha ships no CSCA certificates: the owner imports a master list or certificate file they downloaded (D-421). A master list counts only when its signature and its signer’s chain to a CSCA inside it verify; the anchor’s SHA-256 fingerprint is shown for the owner to compare with the publisher’s, and named when it matches one Kosha knows. Without an import for the issuing state a chip read shows the chip is intact (verified, labelled x-kosha.csca_unavailable), never issuer_signed. Revocation lists are not checked."
+    },
+    {
+      "section": "s11",
+      "code": "chip_pace_generic_only",
+      "description": "Chips are unlocked by PACE with Generic Mapping (ECDH on the standard curves, DH on parameter 0; AES or 3DES secure messaging) when EF.CardAccess offers it, otherwise by Basic Access Control. Integrated and Chip Authentication Mapping, DH parameters 1 and 2, chip and active authentication, revocation lists (CRLs) and the mDL (ISO 18013-5) are not supported."
+    },
+    {
+      "section": "s11",
+      "code": "chip_untested_on_hardware",
+      "description": "BAC and PACE are tested against ICAO 9303 Part 11’s worked examples (Appendix D and G, as transcribed by open-source readers) and a simulated chip, and passive authentication against fictional state certificates and the real German master list’s signatures; no real passport has been read."
     },
     {
       "section": "s12",
       "code": "self_run_only",
-      "description": "Kosha runs its own §12 suite (packages/ondevice/src/omda-conformance.test.ts; report in packages/ondevice/conformance/report.json): synthetic clean, degraded and adversarial fixtures through the MCP interface, 13 of 14 passing, the failure being the multi-document split. It tests the OMDA layer, not OCR or the reading model, whose metrics come from Kosha’s own benchmark; no shared suite exists yet."
+      "description": "Kosha runs its own §12 suite (packages/ondevice/src/omda-conformance.test.ts; report in packages/ondevice/conformance/report.json): synthetic clean, degraded and adversarial fixtures through the MCP interface, 13 of 13 passing. It tests the OMDA layer, not OCR or the reading model, whose metrics come from Kosha’s own benchmark; no shared suite exists yet."
     }
   ],
   "slots": [
@@ -229,7 +244,7 @@
   },
   "report": {
     "suite_version": "kosha-self-0.1",
-    "run_at": "2026-11-26T16:18:51.113Z",
-    "signature": "eyJhbGciOiJFUzI1NiIsInR5cCI6Im9tZGEtY29uZm9ybWFuY2UrandzIiwia2lkIjoiQ1l4Q044bUFHRl91ZXBKQmNkeWFwbmRHeS1hQTVaRXdrZ2NBMUVUblNUNCJ9..SFrMASsLZfROe2PD706__JqqMbj2NfgliuPiz_rZh6ffKyShrjnWPIZmHXUEBL15gw7Kgs4ckpvYdMCYUbEKaQ"
+    "run_at": "2026-11-27T03:23:25.585Z",
+    "signature": "eyJhbGciOiJFUzI1NiIsInR5cCI6Im9tZGEtY29uZm9ybWFuY2UrandzIiwia2lkIjoiQ1l4Q044bUFHRl91ZXBKQmNkeWFwbmRHeS1hQTVaRXdrZ2NBMUVUblNUNCJ9..eoOgb3TzqI7sufNRP6W8VyDUO5dhbgj9sORlnW_sOXop-zFmkl5aCWV_aCBS_UwLf8qSHzIFEErHEKCkt5N0sw"
   }
 }
