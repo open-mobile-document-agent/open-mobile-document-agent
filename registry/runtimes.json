@@ -6,17 +6,17 @@
     {
       "runtime": "Kosha",
       "publisher": "Kosha",
-      "version": "0.1.0-beta.3",
+      "version": "0.1.0-beta.4",
       "platforms": [
         "android"
       ],
       "level": "L1+",
       "tier": "T2",
-      "gaps": 22,
-      "manifest": "runtimes/kosha/0.1.0-beta.3.manifest.json",
+      "gaps": 25,
+      "manifest": "runtimes/kosha/0.1.0-beta.4.manifest.json",
       "publisher_key": "runtimes/kosha/publisher.jwk.json",
       "kid": "CYxCN8mAGF_uepJBcdyapndGy-aA5ZEwkgcA1ETnST4",
-      "run_at": "2026-11-26T16:18:51.113Z"
+      "run_at": "2026-11-27T03:23:25.585Z"
     }
   ]
 }
